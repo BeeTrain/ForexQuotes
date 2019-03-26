@@ -1,8 +1,8 @@
 package ru.chernakov.forexquotes.core.extension
 
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders

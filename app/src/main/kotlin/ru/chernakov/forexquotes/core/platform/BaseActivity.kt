@@ -1,7 +1,7 @@
 package ru.chernakov.forexquotes.core.platform
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import ru.chernakov.forexquotes.R
 import ru.chernakov.forexquotes.core.extension.inTransaction
 
