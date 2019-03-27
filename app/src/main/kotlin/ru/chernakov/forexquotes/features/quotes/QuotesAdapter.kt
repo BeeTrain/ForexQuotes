@@ -3,7 +3,10 @@ package ru.chernakov.forexquotes.features.quotes
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.item_qoute.view.*
 import ru.chernakov.forexquotes.R
+import ru.chernakov.forexquotes.core.extension.formatDate
+import ru.chernakov.forexquotes.core.extension.getDateFromUnixTimestamp
 import ru.chernakov.forexquotes.core.extension.inflate
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -25,7 +28,10 @@ class QuotesAdapter
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(quoteView: QuoteView) {
-            itemView
+            itemView.titleSymbols.text = quoteView.symbol
+            itemView.bid.text = quoteView.bid.toString()
+            itemView.ask.text = quoteView.ask.toString()
+            itemView.timestamp.text = formatDate(getDateFromUnixTimestamp(quoteView.timestamp))
         }
     }
 }

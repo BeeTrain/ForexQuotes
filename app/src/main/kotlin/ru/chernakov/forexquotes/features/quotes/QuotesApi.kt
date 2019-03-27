@@ -1,6 +1,7 @@
 package ru.chernakov.forexquotes.features.quotes
 
-import retrofit2.Call
+import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,8 +13,8 @@ internal interface QuotesApi {
     }
 
     @GET(SYMBOLS)
-    fun symbols(@Query(API_KEY) apiKey: String): Call<List<String>>
+    fun symbols(@Query(API_KEY) apiKey: String): Single<List<String>>
 
     @GET(QUOTES)
-    fun quotes(@Query(SYMBOLS) symbols: String, @Query(API_KEY) apiKey: String): Call<List<Quote>>
+    fun quotes(@Query(SYMBOLS) symbols: String, @Query(API_KEY) apiKey: String): Observable<List<Quote>>
 }

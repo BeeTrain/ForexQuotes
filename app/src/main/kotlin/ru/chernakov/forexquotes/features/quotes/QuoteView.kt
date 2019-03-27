@@ -17,7 +17,7 @@ data class QuoteView(
     }
 
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
+        parcel.readString()!!,
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readDouble(),

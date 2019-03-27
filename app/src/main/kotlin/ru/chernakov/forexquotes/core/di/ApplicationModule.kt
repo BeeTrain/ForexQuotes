@@ -1,6 +1,7 @@
 package ru.chernakov.forexquotes.core.di
 
 import android.content.Context
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -29,6 +30,7 @@ class ApplicationModule(private val app: App) {
         return Retrofit.Builder()
             .baseUrl("https://forex.1forge.com/1.0.3/")
             .client(createClient())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -44,15 +46,11 @@ class ApplicationModule(private val app: App) {
 
     @Provides
     @Singleton
-    internal fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor {
-        return jobExecutor
-    }
+    internal fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
 
     @Provides
     @Singleton
-    internal fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread {
-        return uiThread
-    }
+    internal fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread = uiThread
 
     @Provides
     @Singleton

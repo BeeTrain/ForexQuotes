@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ForexQuotes</string>
+	<string name="app_name">ForexQuotes</string>
+	<string name="list_empty">Нет данных</string>
 </resources>

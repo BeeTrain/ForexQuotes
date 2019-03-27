@@ -1,6 +1,7 @@
 package ru.chernakov.forexquotes.features.quotes
 
-import retrofit2.Call
+import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,8 +12,8 @@ class QuotesService
 
     private val quotesApi by lazy { retrofit.create(QuotesApi::class.java) }
 
-    override fun symbols(apiKey: String): Call<List<String>> = quotesApi.symbols(apiKey)
+    override fun symbols(apiKey: String): Single<List<String>> = quotesApi.symbols(apiKey)
 
-    override fun quotes(symbols: String, apiKey: String): Call<List<Quote>> = quotesApi.quotes(symbols, apiKey)
+    override fun quotes(symbols: String, apiKey: String): Observable<List<Quote>> = quotesApi.quotes(symbols, apiKey)
 
 }
