@@ -8,10 +8,12 @@ import javax.inject.Inject
 
 class GetQuotes
 @Inject constructor(
-    private val quotesRepository: QuotesRepository, threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread
-) : UseCaseObservable<List<Quote>, Void>(threadExecutor, postExecutionThread) {
+    private val quotesRepository: QuotesRepository,
+    threadExecutor: ThreadExecutor,
+    postExecutionThread: PostExecutionThread
+) : UseCaseObservable<List<Quote>, String>(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseObservable(params: Void?): Observable<List<Quote>> {
-        return quotesRepository.quotes()
+    override fun buildUseCaseObservable(params: String): Observable<List<Quote>> {
+        return quotesRepository.quotes(params.toString())
     }
 }

@@ -26,6 +26,15 @@ class QuotesAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(collection[position])
 
+    fun getVisibleItems(firstVisibleItemPos: Int, lastVisibleItemPos: Int): List<QuoteView> {
+        val visibleItems = ArrayList<QuoteView>()
+        for (i in firstVisibleItemPos..lastVisibleItemPos) {
+            visibleItems.add(collection[i])
+        }
+
+        return visibleItems
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(quoteView: QuoteView) {
             itemView.titleSymbols.text = quoteView.symbol

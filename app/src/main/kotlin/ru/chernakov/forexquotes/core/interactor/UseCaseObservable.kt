@@ -15,9 +15,9 @@ abstract class UseCaseObservable<T, Params>(
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-    internal abstract fun buildUseCaseObservable(params: Void?): Observable<T>
+    internal abstract fun buildUseCaseObservable(params: Params): Observable<T>
 
-    fun execute(observer: DisposableObserver<T>, params: Void?) {
+    fun execute(observer: DisposableObserver<T>, params: Params) {
 
         val observable = this.buildUseCaseObservable(params)
             .subscribeOn(Schedulers.from(threadExecutor))

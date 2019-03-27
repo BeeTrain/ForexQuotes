@@ -11,7 +11,7 @@ import javax.inject.Inject
 interface QuotesRepository {
     fun symbols(): Single<List<Quote>>
 
-    fun quotes(): Observable<List<Quote>>
+    fun quotes(items: String): Observable<List<Quote>>
 
     class Network
     @Inject constructor(
@@ -28,8 +28,9 @@ interface QuotesRepository {
 
         }
 
-        override fun quotes(): Observable<List<Quote>> {
-            return service.quotes("", "").delay(3000, TimeUnit.MILLISECONDS)
+        override fun quotes(items: String): Observable<List<Quote>> {
+            return service.quotes(items, context.getString(R.string.api_key))
+                .delay(3000, TimeUnit.MILLISECONDS)
         }
     }
 }
