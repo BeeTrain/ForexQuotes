@@ -38,6 +38,7 @@ class QuotesAdapter
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(quoteView: QuoteView) {
             itemView.titleSymbols.text = quoteView.symbol
+            itemView.price.text = quoteView.price.toString()
             itemView.bid.text = quoteView.bid.toString()
             itemView.ask.text = quoteView.ask.toString()
             itemView.timestamp.text = formatDate(getDateFromUnixTimestamp(quoteView.timestamp))
