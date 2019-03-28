@@ -30,7 +30,7 @@ interface QuotesRepository {
 
         override fun quotes(items: String): Observable<List<Quote>> {
             return service.quotes(items, context.getString(R.string.api_key))
-                .delay(3000, TimeUnit.MILLISECONDS)
+                .repeatWhen { it.delay(10000, TimeUnit.MILLISECONDS) }
         }
     }
 }
