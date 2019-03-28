@@ -5,7 +5,9 @@ import ru.chernakov.forexquotes.core.executor.PostExecutionThread
 import ru.chernakov.forexquotes.core.executor.ThreadExecutor
 import ru.chernakov.forexquotes.core.interactor.UseCaseObservable
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class GetQuotes
 @Inject constructor(
     private val quotesRepository: QuotesRepository,
@@ -14,6 +16,6 @@ class GetQuotes
 ) : UseCaseObservable<List<Quote>, String>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: String): Observable<List<Quote>> {
-        return quotesRepository.quotes(params.toString())
+        return quotesRepository.quotes(params)
     }
 }

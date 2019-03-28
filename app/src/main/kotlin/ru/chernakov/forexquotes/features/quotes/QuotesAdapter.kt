@@ -14,7 +14,7 @@ import kotlin.properties.Delegates
 class QuotesAdapter
 @Inject constructor() : RecyclerView.Adapter<QuotesAdapter.ViewHolder>() {
 
-    internal var collection: List<QuoteView> by Delegates.observable(emptyList()) { _, _, _ ->
+    internal var collection: ArrayList<QuoteView> by Delegates.observable(ArrayList()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
@@ -33,6 +33,11 @@ class QuotesAdapter
         }
 
         return visibleItems
+    }
+
+    fun modifyItem(position: Int, model: QuoteView) {
+        collection.set(position, model)
+        notifyItemChanged(position)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

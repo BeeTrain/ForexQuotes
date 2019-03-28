@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 interface QuotesRepository {
-    fun symbols(): Single<List<Quote>>
+    fun allQuotes(): Single<List<Quote>>
 
     fun quotes(items: String): Observable<List<Quote>>
 
@@ -20,17 +20,16 @@ interface QuotesRepository {
         private val context: Context
     ) : QuotesRepository {
 
-        override fun symbols(): Single<List<Quote>> {
+        override fun allQuotes(): Single<List<Quote>> {
             return when (networkHandler.isConnected) {
-                true -> service.symbols(context.getString(R.string.api_key)).map { transform(it) }
+                true -> service.allQuotes(context.getString(R.string.api_key))
                 false, null -> Single.error(Throwable())
             }
-
         }
 
         override fun quotes(items: String): Observable<List<Quote>> {
             return service.quotes(items, context.getString(R.string.api_key))
-                .repeatWhen { it.delay(10000, TimeUnit.MILLISECONDS) }
+                .repeatWhen { it.delay(5000, TimeUnit.MILLISECONDS) }
         }
     }
 }

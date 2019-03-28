@@ -3,7 +3,6 @@ package ru.chernakov.forexquotes.features.quotes
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_quotes.*
 import ru.chernakov.forexquotes.core.exception.Failure
 import ru.chernakov.forexquotes.core.extension.*
@@ -38,39 +37,17 @@ class QuotesFragment : BaseFragment() {
     private fun initView() {
         quotesList.layoutManager = LinearLayoutManager(context)
         quotesList.adapter = quotesAdapter
-        val onScrollListener = object : RecyclerView.OnScrollListener() {
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val lm = recyclerView.layoutManager as LinearLayoutManager
-                    val adapter = recyclerView.adapter as QuotesAdapter
-
-                    val first = lm.findFirstCompletelyVisibleItemPosition()
-                    val last = lm.findLastCompletelyVisibleItemPosition()
-
-                    val items = adapter.getVisibleItems(first, last)
-
-                    val str = items.joinToString { it.symbol }
-
-//                    quotesViewModel.loadQuotes(str)
-//                    showMessage(str)
-                }
-
-            }
-        }
-
-        quotesList.addOnScrollListener(onScrollListener)
+        quotesList.addOnScrollListener(quotesViewModel.scrollListener)
     }
 
     private fun loadQuotes() {
         emptyView.invisible()
         quotesList.visible()
-        quotesViewModel.loadQuotes()
+        quotesViewModel.loadAllQuotes()
     }
 
     private fun renderQuotesList(quotes: List<QuoteView>?) {
-        quotesAdapter.collection = quotes.orEmpty()
+        quotesAdapter.collection = quotes.orEmpty() as ArrayList<QuoteView>
     }
 
     private fun handleFailure(failure: Failure?) {

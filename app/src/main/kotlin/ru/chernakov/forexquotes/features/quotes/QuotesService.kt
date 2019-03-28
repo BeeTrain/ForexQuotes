@@ -12,7 +12,7 @@ class QuotesService
 
     private val quotesApi by lazy { retrofit.create(QuotesApi::class.java) }
 
-    override fun symbols(apiKey: String): Single<List<String>> = quotesApi.symbols(apiKey)
+    override fun allQuotes(apiKey: String): Single<List<Quote>> = quotesApi.allQuotes(apiKey)
 
     override fun quotes(symbols: String, apiKey: String): Observable<List<Quote>> = quotesApi.quotes(symbols, apiKey)
 
