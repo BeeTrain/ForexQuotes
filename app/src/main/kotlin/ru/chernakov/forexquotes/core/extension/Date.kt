@@ -5,7 +5,7 @@ import java.util.*
 
 
 fun formatDate(date: Date?): String {
-    val dateFormat = SimpleDateFormat("dd.MM.yyyy, HH:mm")
+    val dateFormat = SimpleDateFormat("dd.MM.yyyy, HH:mm:ss")
     return dateFormat.format(date)
 }
 
