@@ -59,6 +59,7 @@ class QuotesFragment : BaseFragment() {
 
         quotesList.layoutManager = LinearLayoutManager(context)
         quotesList.adapter = quotesAdapter
+        quotesAdapter.layoutManager = quotesList.layoutManager as LinearLayoutManager
     }
 
     private fun renderQuotesList(quotes: List<QuoteView>?) {

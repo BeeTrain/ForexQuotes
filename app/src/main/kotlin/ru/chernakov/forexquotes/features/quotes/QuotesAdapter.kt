@@ -11,12 +11,14 @@ import ru.chernakov.forexquotes.core.extension.formatDate
 import ru.chernakov.forexquotes.core.extension.getDateFromUnixTimestamp
 import ru.chernakov.forexquotes.core.extension.inflate
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.properties.Delegates
 
+@Singleton
 class QuotesAdapter
 @Inject constructor(val context: Context) : RecyclerView.Adapter<QuotesAdapter.ViewHolder>() {
 
-    private val layoutManager = LinearLayoutManager(context)
+    var layoutManager = LinearLayoutManager(context)
 
     internal var visibleItems: List<QuoteView> = ArrayList()
 
@@ -35,20 +37,16 @@ class QuotesAdapter
         holder.bind(collection[position])
 
     private fun updateVisibleItems() {
-        val firstPos = layoutManager.findFirstVisibleItemPosition()
-        val lastPos = layoutManager.findLastVisibleItemPosition()
-        if (firstPos > -1 && lastPos > -1) {
-            visibleItems = getVisibleItems(firstPos, lastPos)
-        }
-    }
+        val firstPosition = layoutManager.findFirstVisibleItemPosition()
+        val lastPosition = layoutManager.findLastVisibleItemPosition()
+        if (firstPosition > -1 && lastPosition > -1) {
+            val visibleItems = ArrayList<QuoteView>()
+            for (i in firstPosition..lastPosition) {
+                visibleItems.add(collection[i])
+            }
 
-    private fun getVisibleItems(firstVisibleItemPos: Int, lastVisibleItemPos: Int): List<QuoteView> {
-        val visibleItems = ArrayList<QuoteView>()
-        for (i in firstVisibleItemPos..lastVisibleItemPos) {
-            visibleItems.add(collection[i])
+            this.visibleItems = visibleItems
         }
-
-        return visibleItems
     }
 
     class ViewHolder(val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
