@@ -1,9 +1,7 @@
 package ru.chernakov.forexquotes.features.quotes
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat.getDrawable
@@ -12,7 +10,9 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_quotes.*
 import ru.chernakov.forexquotes.R
 import ru.chernakov.forexquotes.core.exception.Failure
-import ru.chernakov.forexquotes.core.extension.*
+import ru.chernakov.forexquotes.core.extension.failure
+import ru.chernakov.forexquotes.core.extension.observe
+import ru.chernakov.forexquotes.core.extension.viewModel
 import ru.chernakov.forexquotes.core.platform.BaseFragment
 import javax.inject.Inject
 
@@ -25,8 +25,6 @@ class QuotesFragment : BaseFragment() {
 
     private lateinit var quotesViewModel: QuotesViewModel
 
-    var isConnected: Boolean? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
@@ -37,42 +35,36 @@ class QuotesFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val v = super.onCreateView(inflater, container, savedInstanceState)
-        initToolbar(v)
-
-        return v
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view)
     }
 
-    private fun initToolbar(view: View) {
+    override fun onResume() {
+        super.onResume()
+        quotesViewModel.togglePeriodicUpdates(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        quotesViewModel.togglePeriodicUpdates(false)
+    }
+
+    private fun initView(view: View) {
         val toolbar: Toolbar = view.findViewById(R.id.toolbar)
         val activity = activity as AppCompatActivity
         activity.setSupportActionBar(toolbar)
         toolbar.title = getString(R.string.app_name)
         toolbar.navigationIcon = getDrawable(context!!.resources, R.mipmap.ic_launcher, context!!.theme)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-        loadQuotes()
-    }
-
-    private fun initView() {
         quotesList.layoutManager = LinearLayoutManager(context)
         quotesList.adapter = quotesAdapter
     }
 
-    private fun loadQuotes() {
-        emptyView.invisible()
-        quotesList.visible()
-        quotesViewModel.initPeriodicUpdates()
-    }
-
     private fun renderQuotesList(quotes: List<QuoteView>?) {
-        if (isConnected == null || isConnected == false) {
-            isConnected = true
-            Snackbar.make(view!!, getString(R.string.msg_connection_restored), Snackbar.LENGTH_SHORT).show()
+        if (quotesViewModel.isConnected == null || quotesViewModel.isConnected == false) {
+            quotesViewModel.isConnected = true
+            Snackbar.make(view!!, getString(R.string.msg_connected), Snackbar.LENGTH_SHORT).show()
         }
         quotesAdapter.collection = quotes.orEmpty() as ArrayList<QuoteView>
     }
@@ -80,8 +72,8 @@ class QuotesFragment : BaseFragment() {
     private fun handleFailure(failure: Failure?) {
         when (failure) {
             is Failure.NetworkConnection -> {
-                if (isConnected == null || isConnected == true) {
-                    isConnected = false
+                if (quotesViewModel.isConnected == null || quotesViewModel.isConnected == true) {
+                    quotesViewModel.isConnected = false
                     Snackbar.make(view!!, getString(R.string.msg_internet_not_available), Snackbar.LENGTH_INDEFINITE)
                         .show()
                 }

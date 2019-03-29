@@ -16,6 +16,10 @@ class QuotesViewModel
 
     var quotes: MutableLiveData<List<QuoteView>> = MutableLiveData()
 
+    var isConnected: Boolean? = null
+
+    var timer: Timer? = null
+
     private fun handleQuotesList(quotes: List<Quote>) {
         if (failure.value != null) {
             failure.value
@@ -23,10 +27,17 @@ class QuotesViewModel
         this.quotes.value = quotes.map { QuoteView(it.symbol, it.price, it.bid, it.ask, it.timestamp) }
     }
 
-    fun initPeriodicUpdates() {
-        val timer = Timer()
-        val updateVisibleTask = UpdateVisibleTask()
-        timer.scheduleAtFixedRate(updateVisibleTask, 0, LIST_UPDATE_TIME_MS)
+    fun togglePeriodicUpdates(isActive: Boolean) {
+        when (isActive) {
+            true -> {
+                timer = Timer()
+                timer!!.scheduleAtFixedRate(UpdateVisibleTask(), 0, LIST_UPDATE_TIME_MS)
+            }
+            false -> {
+                timer?.cancel()
+                timer?.purge()
+            }
+        }
     }
 
     private inner class UpdateVisibleTask : TimerTask() {
