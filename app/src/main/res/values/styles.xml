@@ -1,11 +1,30 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="android:textColorPrimary">@color/textColorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorOnSecondary</item>
+        <item name="colorControlActivated">@color/colorSecondary</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/AppTheme</item>
+        <item name="android:textColor">@color/textColorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorOnSecondary</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="AppTheme.TextView">
+        <item name="android:textColor">@color/textColorOnSecondary</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>

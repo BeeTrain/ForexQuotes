@@ -1,7 +1,12 @@
 package ru.chernakov.forexquotes.features.quotes
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat.getDrawable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_quotes.*
@@ -30,6 +35,21 @@ class QuotesFragment : BaseFragment() {
             observe(quotes, ::renderQuotesList)
             failure(failure, ::handleFailure)
         }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val v = super.onCreateView(inflater, container, savedInstanceState)
+        initToolbar(v)
+
+        return v
+    }
+
+    private fun initToolbar(view: View) {
+        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+        val activity = activity as AppCompatActivity
+        activity.setSupportActionBar(toolbar)
+        toolbar.title = getString(R.string.app_name)
+        toolbar.navigationIcon = getDrawable(context!!.resources, R.mipmap.ic_launcher, context!!.theme)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

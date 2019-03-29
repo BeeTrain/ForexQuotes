@@ -1,7 +1,9 @@
 <resources>
-	<string name="app_name">ForexQuotes</string>
-	<string name="list_empty">Нет данных</string>
-	<string name="msg_connection_restored">Соединение восстановлено</string>
-	<string name="msg_internet_not_available">Отсутствует интернет соединение</string>
-	<string name="msg_server_error">Проблемы на стороне сервера</string>
+    <string name="app_name">ForexQuotes</string>
+    <string name="ask_label" formatted="false">ask: %s</string>
+    <string name="bid_label" formatted="false">bid: %s</string>
+    <string name="list_empty">Нет данных</string>
+    <string name="msg_connection_restored">Соединение восстановлено</string>
+    <string name="msg_internet_not_available">Отсутствует интернет соединение</string>
+    <string name="msg_server_error">Проблемы на стороне сервера</string>
 </resources>

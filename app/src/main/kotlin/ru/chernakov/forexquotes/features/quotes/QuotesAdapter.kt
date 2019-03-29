@@ -14,7 +14,7 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class QuotesAdapter
-@Inject constructor(context: Context) : RecyclerView.Adapter<QuotesAdapter.ViewHolder>() {
+@Inject constructor(val context: Context) : RecyclerView.Adapter<QuotesAdapter.ViewHolder>() {
 
     private val layoutManager = LinearLayoutManager(context)
 
@@ -26,7 +26,7 @@ class QuotesAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         updateVisibleItems()
-        return ViewHolder(parent.inflate(R.layout.item_qoute))
+        return ViewHolder(context, parent.inflate(R.layout.item_qoute))
     }
 
     override fun getItemCount() = collection.size
@@ -51,12 +51,12 @@ class QuotesAdapter
         return visibleItems
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(quoteView: QuoteView) {
             itemView.titleSymbols.text = quoteView.symbol
             itemView.price.text = quoteView.price.toString()
-            itemView.bid.text = quoteView.bid.toString()
-            itemView.ask.text = quoteView.ask.toString()
+            itemView.bid.text = context.getString(R.string.bid_label, quoteView.bid.toString())
+            itemView.ask.text = context.getString(R.string.ask_label, quoteView.ask.toString())
             itemView.timestamp.text = formatDate(getDateFromUnixTimestamp(quoteView.timestamp))
         }
     }

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#008577</color>
-	<color name="colorPrimaryDark">#00574B</color>
-	<color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#6a1b9a</color>
+    <color name="colorPrimaryDark">#38006b</color>
+    <color name="colorPrimaryLight">#9c4dcc</color>
+    <color name="colorSecondary">#ffb74d</color>
 
-	<color name="grey_400">#bdbdbd</color>
+    <color name="textColorOnPrimary">#ffffff</color>
+    <color name="textColorOnSecondary">#3e2723</color>
+
+    <color name="grey_400">#bdbdbd</color>
+
+    <color name="ic_launcher_background">#9A58B5</color>
 
 </resources>
