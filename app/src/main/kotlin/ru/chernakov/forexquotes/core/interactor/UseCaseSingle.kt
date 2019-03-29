@@ -15,9 +15,9 @@ abstract class UseCaseSingle<T, Params>(
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-    internal abstract fun buildUseCaseSingle(params: Void?): Single<T>
+    internal abstract fun buildUseCaseSingle(params: Params): Single<T>
 
-    fun execute(observer: DisposableSingleObserver<T>, params: Void?) {
+    fun execute(observer: DisposableSingleObserver<T>, params: Params) {
 
         val single = this.buildUseCaseSingle(params)
             .subscribeOn(Schedulers.from(threadExecutor))

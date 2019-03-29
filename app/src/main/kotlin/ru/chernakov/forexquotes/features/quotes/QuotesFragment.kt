@@ -37,13 +37,12 @@ class QuotesFragment : BaseFragment() {
     private fun initView() {
         quotesList.layoutManager = LinearLayoutManager(context)
         quotesList.adapter = quotesAdapter
-        quotesList.addOnScrollListener(quotesViewModel.scrollListener)
     }
 
     private fun loadQuotes() {
         emptyView.invisible()
         quotesList.visible()
-        quotesViewModel.loadAllQuotes()
+        quotesViewModel.initPeriodicUpdates()
     }
 
     private fun renderQuotesList(quotes: List<QuoteView>?) {
