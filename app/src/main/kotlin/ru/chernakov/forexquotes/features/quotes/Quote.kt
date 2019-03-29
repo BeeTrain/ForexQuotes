@@ -2,7 +2,6 @@ package ru.chernakov.forexquotes.features.quotes
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.chernakov.forexquotes.core.extension.empty
 
 data class Quote(
 
@@ -27,7 +26,7 @@ data class Quote(
     val timestamp: Int
 ) {
     companion object {
-        fun empty() = Quote(String.empty(), 0.0, 0.0, 0.0, 0)
-        fun symbolOnly(symbol: String) = Quote(symbol, 0.0, 0.0, 0.0, 0)
+        fun fromQuoteView(quoteView: QuoteView) =
+            Quote(quoteView.symbol, quoteView.price, quoteView.bid, quoteView.ask, quoteView.timestamp)
     }
 }

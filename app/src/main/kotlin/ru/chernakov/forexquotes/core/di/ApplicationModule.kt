@@ -26,6 +26,18 @@ class ApplicationModule(private val app: App) {
 
     @Provides
     @Singleton
+    fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
+
+    @Provides
+    @Singleton
+    fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread = uiThread
+
+    @Provides
+    @Singleton
+    fun provideQuotesRepository(dataSource: QuotesRepository.Network): QuotesRepository = dataSource
+
+    @Provides
+    @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://forex.1forge.com/1.0.3/")
@@ -43,17 +55,5 @@ class ApplicationModule(private val app: App) {
         }
         return okHttpClientBuilder.build()
     }
-
-    @Provides
-    @Singleton
-    internal fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
-
-    @Provides
-    @Singleton
-    internal fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread = uiThread
-
-    @Provides
-    @Singleton
-    fun provideQuotesRepository(dataSource: QuotesRepository.Network): QuotesRepository = dataSource
 
 }

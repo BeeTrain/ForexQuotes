@@ -1,6 +1,8 @@
 package ru.chernakov.forexquotes.features.quotes
 
 import androidx.lifecycle.MutableLiveData
+import ru.chernakov.forexquotes.LIST_UPDATE_TIME_MS
+import ru.chernakov.forexquotes.core.exception.Failure
 import ru.chernakov.forexquotes.core.interactor.BaseObserverSingle
 import ru.chernakov.forexquotes.core.platform.BaseViewModel
 import java.util.*
@@ -15,13 +17,16 @@ class QuotesViewModel
     var quotes: MutableLiveData<List<QuoteView>> = MutableLiveData()
 
     private fun handleQuotesList(quotes: List<Quote>) {
+        if (failure.value != null) {
+            failure.value
+        }
         this.quotes.value = quotes.map { QuoteView(it.symbol, it.price, it.bid, it.ask, it.timestamp) }
     }
 
     fun initPeriodicUpdates() {
         val timer = Timer()
         val updateVisibleTask = UpdateVisibleTask()
-        timer.scheduleAtFixedRate(updateVisibleTask, 0, 5000)
+        timer.scheduleAtFixedRate(updateVisibleTask, 0, LIST_UPDATE_TIME_MS)
     }
 
     private inner class UpdateVisibleTask : TimerTask() {
@@ -50,18 +55,16 @@ class QuotesViewModel
                         }
                     }
                     if (!isUpdated) {
-                        quotesUpdate.add(
-                            Quote(
-                                QuoteView.symbol,
-                                QuoteView.price,
-                                QuoteView.bid,
-                                QuoteView.ask,
-                                QuoteView.timestamp
-                            )
-                        )
+                        quotesUpdate.add(Quote.fromQuoteView(QuoteView))
                     }
                 }
                 handleQuotesList(quotesUpdate)
+            }
+        }
+
+        override fun onError(e: Throwable) {
+            if (e is Failure) {
+                handleFailure(e)
             }
         }
     }
