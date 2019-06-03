@@ -6,6 +6,6 @@
 ## [Forex API - Realtime Forex and Cryptocurrency Quotes  ![Forex API](https://github.com/BeeTrain/ForexQuotes/blob/master/media/forge_logo.png)](https://1forge.com/forex-data-api)
 
 ### Features
-* Free API 
+* Free API (Sorry, free API was removed, see https://1forge.com/forex-data-api/pricing )
 * Receive quote data (bid & ask) for 700+ pairs
 * Real-time updates (every 3s) for visible notes
